@@ -1,0 +1,2 @@
+beautifulsoup4==4.3.2
+pika==0.9.14
