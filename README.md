@@ -9,6 +9,6 @@
 3. Install RabbitMQ (`brew install rabbitmq`).
 4. Install [heroku-toolbelt](https://toolbelt.heroku.com/).
 5. Install the dependencies (`pip install -r requirements.txt`).
-6. Retrieve a template of the environment config files from another developer and place them in `config/`.
+6. Rename the environment config template to `development.env`.
 7. Replace any credentials in the config for your local environment that might differ from the defaults.
 8. Create a symbolic link from the environment you want to use as your default environment (e.g. `ln -s config/development.env .env`).
