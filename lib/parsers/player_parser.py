@@ -8,7 +8,6 @@ class PlayerParser(Parser):
     html = bs4.BeautifulSoup(self.data)
 
     name_header = html.select('span#fontHeader')[0] 
-    logging.getLogger(__name__).info(name_header.find_parent('table').find_next_sibling('table'))
     info_table = name_header.find_parent('table').find_next_sibling('table')
     info_subtable = info_table.find('table')
     

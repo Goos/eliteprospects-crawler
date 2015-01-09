@@ -19,7 +19,7 @@ class PlayerRequestConsumer(AbstractConsumer):
       url = self.BASE_URL + '?player=%s' % json_msg['player_id']
       logger.info("Loading data for player: %s", url)
 
-      request = requests.get(url)
+      request = requests.request('get', url)
       parser = PlayerParser(request.text)
       logger.info("Parsing data for player: %s", json_msg)
       parser.run()
