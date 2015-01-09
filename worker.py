@@ -5,8 +5,7 @@ from amqpy import Connection, Timeout, Message
 from lib.consumers.player_request_consumer import PlayerRequestConsumer
 
 def main():  
-  LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
-              '-35s %(lineno) -5d: %(message)s')
+  LOG_FORMAT = '%(levelname) -5s %(asctime) -1s %(name)-0s:%(funcName)-0s:%(lineno) -1s: %(message)s'
   logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
   logger = logging.getLogger(__name__)
   
