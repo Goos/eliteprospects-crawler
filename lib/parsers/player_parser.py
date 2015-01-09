@@ -8,12 +8,9 @@ class PlayerParser(Parser):
     html = bs4.BeautifulSoup(self.data)
 
     name_header = html.select('span#fontHeader')[0] 
-    logging.getLogger(__name__).info(name_header.find_parent('table').parent)
-    info_table = name_header.find_parent('table').find_next_sibling('table')
-    
-    name = name_header.text 
-    birthdate = self.find_birthdate(info_table)
-  
+
+    info_table = html.select('span#fontSmall')[0].find_parent('table')
+      
     parsed = {
       'name': name_header.text,
       'birthdate': self.find_birthdate(info_table),
