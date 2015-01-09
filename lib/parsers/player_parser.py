@@ -8,26 +8,24 @@ class PlayerParser(Parser):
     html = bs4.BeautifulSoup(self.data)
 
     name_header = html.select('span#fontHeader')[0] 
-    logging.getLogger(__name__).info(html)
     info_table = name_header.find_parent('table').find_next_sibling('table')
-    info_subtable = info_table.find('table')
     
     name = name_header.text 
-    birthdate = self.find_birthdate(info_subtable)
+    birthdate = self.find_birthdate(info_table)
   
     parsed = {
       'name': name_header.text,
-      'birthdate': self.find_birthdate(info_subtable),
-      'birthplace': self.find_birthplace(info_subtable),
-      'age': self.find_age(info_subtable),
-      'nationality': self.find_nationality(info_subtable),
-      'position': self.find_position(info_subtable),
-      'shooting_direction': self.find_shooting_direction(info_subtable),
-      'catching_direction': self.find_catching_direction(info_subtable),
-      'height': self.find_height(info_subtable),
-      'weight': self.find_weight(info_subtable),
-      'status': self.find_status(info_subtable),
-      'youth_team': self.find_youth_team(info_subtable)
+      'birthdate': self.find_birthdate(info_table),
+      'birthplace': self.find_birthplace(info_table),
+      'age': self.find_age(info_table),
+      'nationality': self.find_nationality(info_table),
+      'position': self.find_position(info_table),
+      'shooting_direction': self.find_shooting_direction(info_table),
+      'catching_direction': self.find_catching_direction(info_table),
+      'height': self.find_height(info_table),
+      'weight': self.find_weight(info_table),
+      'status': self.find_status(info_table),
+      'youth_team': self.find_youth_team(info_table)
     }
 
     logging.getLogger(__name__).info(parsed)
