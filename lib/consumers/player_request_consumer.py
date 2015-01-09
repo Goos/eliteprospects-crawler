@@ -20,7 +20,7 @@ class PlayerRequestConsumer(AbstractConsumer):
       parser = PlayerParser(request.text)
       logger.info("Parsing data for player: %s", json_msg)
       parser.run()
-    except (requests.exceptions.RequestException):
+    except:
       return self.reject(msg)
     
     self.acknowledge(msg)
