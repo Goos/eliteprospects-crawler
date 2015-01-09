@@ -1,8 +1,7 @@
 import os, signal, sys
 import logging
 import json
-from amqpy import Message
-from lib.amqp_client import AMQPClient, MessageType, Queue
+from lib.amqp_client import AMQPClient, Queue
 from lib.consumers.player_request_consumer import PlayerRequestConsumer
 
 def main():  
@@ -19,7 +18,6 @@ def main():
   pl_consumer = PlayerRequestConsumer(client.chan, Queue.players) 
   pl_consumer.declare() 
 
-  client.publish({'player_id': 23047}, MessageType.crawl_player)
   # Adding a handler that closes the amqp-connection when receiving a termination signal.
   def sigterm_handler(signal, frame):
     logger.info('Got SIGTERM, shutting down.')
