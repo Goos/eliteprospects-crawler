@@ -9,7 +9,6 @@ class PlayerParser(Parser):
 
     name_header = html.select('span#fontHeader')[0] 
     info_table = name_header.find_parent('table').find_next_sibling('table')
-    logging.getLogger(__name__).info(html)
     info_subtable = info_table.find('table')
     
     name = name_header.text 
