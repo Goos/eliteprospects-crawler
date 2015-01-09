@@ -32,7 +32,7 @@ class PlayerRequestConsumer(AbstractConsumer):
       # The parser's `run`-method will extract the data and 
       # return a dictionary. 
       parsed_data = parser.run()
-      logger.info(parsed)
+      logger.info(parsed_data)
 
     # In case of HTTP-related exceptions, reject the message,
     # but requeue it, as it's probably temporary.
