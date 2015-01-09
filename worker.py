@@ -1,22 +1,49 @@
 import os, signal, sys
 import logging
-import ./lib/crawl_request_handler
+import json
+from amqpy import Connection, Timeout, Message
+from lib.consumers.player_request_consumer import PlayerRequestConsumer
 
-def main(): 
+def main():  
   LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')
   logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
   logger = logging.getLogger(__name__)
+  
+  host = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_HOST')
+  vhost = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_VIRTUALHOST')
+  login = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_LOGIN')
+  password = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_PASSWORD')
+  port = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_PORT')
+  url = os.environ.get('CLOUDAMQP_RABBITMQ_AMQP_URL')
 
-  url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhhost:5672/%2f')
-  handler = CrawlRequestHandler(url, logger) 
+  conn = Connection(host=host, port=port, userid=login, password=password, virtual_host=vhost)
+  chan = conn.channel()
+
+  chan.exchange_declare('crawler.exchange', 'direct')
+  chan.queue_declare('crawler.queue')
+  chan.queue_bind('crawler.queue', exchange='crawler.exchange', routing_key='crawler')
+
+  msg_body = json.dumps({'player_id': 23047})
+  chan.basic_publish(Message(msg_body), exchange='crawler.exchange', routing_key='crawler')
+  msg_body = json.dumps({'player_id': 23048})
+  chan.basic_publish(Message(msg_body), exchange='crawler.exchange', routing_key='crawler')
+  msg_body = json.dumps({'player_id': 23049})
+  chan.basic_publish(Message(msg_body), exchange='crawler.exchange', routing_key='crawler')
+  msg_body = json.dumps({'player_id': 23050})
+  chan.basic_publish(Message(msg_body), exchange='crawler.exchange', routing_key='crawler')
+  
+  pl_consumer = PlayerRequestConsumer(chan, 'crawler.queue') 
+  pl_consumer.declare()
 
   def sigterm_handler(signal, frame):
     logger.info('Got SIGTERM, shutting down.')
-    handler.stop()
+    conn.close()
   
   signal.signal(signal.SIGTERM, sigterm_handler)
-  handler.run()
+
+  while True:
+    conn.drain_events(timeout=None)
 
 if __name__ == '__main__':
     main()
