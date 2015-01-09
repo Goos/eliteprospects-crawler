@@ -1,8 +1,8 @@
 import os, signal, sys
 import logging
 import json
-from lib.amqp_client import AMQPClient, Queue
-from lib.consumers.player_request_consumer import PlayerRequestConsumer
+from src.amqp_client import AMQPClient, Queue
+from src.consumers.player_request_consumer import PlayerRequestConsumer
 
 def main():  
   # Configuring the logging format.

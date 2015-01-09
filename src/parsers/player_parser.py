@@ -1,4 +1,4 @@
-from lib.parsers.parser import Parser
+from src.parsers.parser import Parser
 import bs4
 from datetime import datetime
 

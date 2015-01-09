@@ -1,5 +1,5 @@
 from amqpy import Message, AbstractConsumer
-from lib.parsers.player_parser import PlayerParser
+from src.parsers.player_parser import PlayerParser
 import os
 import requests
 import json
