@@ -32,7 +32,7 @@ class PlayerParser(Parser):
 
   def find_name(self, html):
     name_span = html.select('span#fontHeader')[0] 
-    return str(name_span.text)
+    return str(name_span.text).title()
 
   def find_birthdate(self, html):
     datestring = self.find_value_for_cell_header(html, 'BIRTHYEAR') 
