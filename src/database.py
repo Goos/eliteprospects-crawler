@@ -35,7 +35,7 @@ class DBClient():
     username = username if username else os.environ.get('DATABASE_USERNAME')
     password = password if password else os.environ.get('DATABASE_PASSWORD')
 
-    uri = "%s://%s:%s@%s/%s" % (driver, username, password, host, dbname)
+    uri = ("%s://%s:%s@%s/%s" % (driver, username, password, host, dbname)).strip()
     
     logger.info("Connecting to database with URI: %s", uri)
 
