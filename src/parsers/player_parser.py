@@ -24,7 +24,7 @@ class PlayerParser(Parser):
       'catching_direction': self.find_catching_direction(info_table),
       'height': self.find_height(info_table),
       'weight': self.find_weight(info_table),
-      'status': self.find_status(info_table),
+      'is_retired': self.find_is_retired(info_table),
       'youth_team': self.find_youth_team(info_table)
     } 
 
@@ -81,8 +81,9 @@ class PlayerParser(Parser):
     except(ValueError):
       return None
 
-  def find_status(self, html):
-    return self.find_value_for_cell_header(html, 'STATUS') 
+  def find_is_retired(self, html): 
+    status = self.find_value_for_cell_header(html, 'STATUS') 
+    return status == 'Retired'
 
   def find_youth_team(self, html):
     return self.find_value_for_cell_header(html, 'YOUTH TEAM') 

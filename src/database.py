@@ -23,7 +23,7 @@ class Player(Base):
   catching_direction = Column(String)
   height = Column(Float)
   weight = Column(Float)
-  status = Column(String, default='Active')
+  is_retired = Column(Boolean, default=False)
   youth_team = Column(String)
 
 
