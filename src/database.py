@@ -36,6 +36,8 @@ class DBClient():
     password = password if password else os.environ.get('DATABASE_PASSWORD')
 
     uri = "%s://%s:%s@%s/%s" % (driver, username, password, host, dbname)
+    
+    logger.info("Connecting to database with URI: %s", uri)
 
     self.engine = create_engine(uri)
 
