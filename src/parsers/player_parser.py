@@ -38,7 +38,11 @@ class PlayerParser(Parser):
     datestring = self.find_value_for_cell_header(html, 'BIRTHYEAR') 
     birthdate = None
     if datestring:
-      birthdate = datetime.strptime(datestring, '%Y-%m-%d')
+      try:
+        birthdate = datetime.strptime(datestring, '%Y-%m-%d')
+      except:
+        birthdate = datetime.strptime(datestring.split('-')[0], '%Y')
+
     return birthdate
     
   def find_birthplace(self, html):

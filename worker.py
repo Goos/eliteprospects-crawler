@@ -3,17 +3,18 @@ import logging
 import json
 from src.amqp_client import AMQPClient, Queue
 from src.consumers.player_request_consumer import PlayerRequestConsumer
+from src.database import Player, DBClient
 
 def main():  
   # Configuring the logging format.
   LOG_FORMAT = '%(levelname) -5s %(asctime) -1s %(name)-0s:%(funcName)-0s:%(lineno) -1s: %(message)s'
   logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-  logger = logging.getLogger(__name__) 
+  logger = logging.getLogger(__name__)
 
   # Setting up the AMQP-client with the default configuration,
   # which is pulling everything from the environment.
   client = AMQPClient()
-  
+   
   # Setting up the consumer that waits for messages related to crawling player profiles.
   pl_consumer = PlayerRequestConsumer(client.chan, Queue.players) 
   pl_consumer.declare() 
