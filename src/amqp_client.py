@@ -62,3 +62,7 @@ class AMQPClient(object):
     elif isinstance(message, CrawlTeamMessage):
       self.chan.basic_publish(message, exchange=Exchange.teams, routing_key='crawler')
 
+  def purge(self):
+    self.chan.queue_purge(Queue.players)
+    self.chan.queue_purge(Queue.teams)
+  
