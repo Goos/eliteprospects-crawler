@@ -43,11 +43,11 @@ class AMQPClient(object):
     # Declaring the exchanges and queues on which the messages will be placed.
     self.chan.exchange_declare(Exchange.players, 'direct')
     self.chan.queue_declare(Queue.players)
-    self.chan.queue_bind(Queue.players, exchange=Exchange.players, routing_key='crawler')
+    self.chan.queue_bind(Queue.players, exchange=Exchange.players, routing_key=Queue.players)
 
     self.chan.exchange_declare(Exchange.teams, 'direct')
     self.chan.queue_declare(Queue.teams)
-    self.chan.queue_bind(Queue.teams, exchange=Exchange.teams, routing_key='crawler')
+    self.chan.queue_bind(Queue.teams, exchange=Exchange.teams, routing_key=Queue.teams)
 
 
   def close(self):
@@ -58,9 +58,9 @@ class AMQPClient(object):
 
   def publish(self, message: JsonMessage):
     if isinstance(message, CrawlPlayerMessage):
-      self.chan.basic_publish(message, exchange=Exchange.players, routing_key='crawler')
+      self.chan.basic_publish(message, exchange=Exchange.players, routing_key=Queue.players)
     elif isinstance(message, CrawlTeamMessage):
-      self.chan.basic_publish(message, exchange=Exchange.teams, routing_key='crawler')
+      self.chan.basic_publish(message, exchange=Exchange.teams, routing_key=Queue.teams)
 
   def purge(self):
     self.chan.queue_purge(Queue.players)
