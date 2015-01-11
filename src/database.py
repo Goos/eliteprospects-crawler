@@ -49,6 +49,10 @@ class DBClient():
 
     self.metadata.create_all(self.engine)
 
+  def close(self):
+    logger.info("Closing database connection.")
+    self.connection.close()
+
   def player_exists(self, eliteprospects_id=None, player_id=None):
     stmt = None
     if eliteprospects_id:

@@ -15,6 +15,9 @@ class PlayerRequestConsumer(AbstractConsumer):
   def __init__(self, channel, queue, consumer_tag='', no_local=False, no_ack=False, exclusive=False, use_thread=False):
     super(PlayerRequestConsumer, self).__init__(channel, queue, consumer_tag, no_local, no_ack, exclusive, use_thread)
     self.db_client = DBClient() 
+  
+  def __del__(self):
+    self.db_client.close()
 
   # Method called when handling a message.
   def run(self, msg: Message):    

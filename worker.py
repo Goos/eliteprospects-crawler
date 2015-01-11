@@ -19,15 +19,20 @@ def main():
   pl_consumer = PlayerRequestConsumer(client.chan, Queue.players) 
   pl_consumer.declare() 
 
+  terminated = False
   # Adding a handler that closes the amqp-connection when receiving a termination signal.
   def sigterm_handler(signal, frame):
     logger.info('Got SIGTERM, shutting down.')
+    terminated = True
+    # Deleting the reference to the conumer and closing
+    # the AMQP-connection.
+    del pl_consumer
     client.close()
   
   signal.signal(signal.SIGTERM, sigterm_handler)
 
   # Setting up the runloop that waits and drains the events from the queue.
-  while True:
+  while not terminated:
     client.drain(timeout=None)
 
 if __name__ == '__main__':
